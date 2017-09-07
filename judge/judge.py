@@ -7,10 +7,10 @@ judgeOnce = True
 ojid = pwd.getpwnam('oj').pw_uid
 rootid = pwd.getpwnam('root').pw_uid
 
-dbserver = "localhost"
-username = "root"
-password = "Ramuk123"
-database = "judge"
+dbserver = "database_server_here"
+username = "database_username_here"
+password = "database_password_here"
+database = "database_name_here"
 
 
 def gainPermissions():
