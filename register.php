@@ -7,8 +7,8 @@
 <?php
 	if(isset($_POST["username"])){
 		$username = htmlspecialchars(addslashes($_POST['username']));
-		$password = htmlspecialchars(addslashes($_POST['password']));
-		$cpassword = htmlspecialchars(addslashes($_POST['cpassword']));
+		$password = $_POST['password'];
+		$cpassword = $_POST['cpassword'];
 		$name = htmlspecialchars(addslashes($_POST['name']));
 		$rollno = htmlspecialchars(addslashes($_POST['rollno']));
 		$email = htmlspecialchars(addslashes($_POST['email']));
@@ -64,7 +64,7 @@
 		}
 		$ip = $_SERVER["REMOTE_ADDR"];
 		if($error==""){
-			$sql = "insert into users(username,password,name,rollno,email,phno,ip) values ('$username','$password','$name','$rollno','$email','$phno','$ip')";
+			$sql = "insert into users(username,password,name,rollno,email,phno,ip) values ('$username','md5($password)','$name','$rollno','$email','$phno','$ip')";
 			mysqli_query($conn,$sql);
 			session_start();
 			$_SESSION["user"] = $username;
