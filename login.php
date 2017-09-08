@@ -1,6 +1,6 @@
 <?php
     $username = htmlspecialchars(addslashes($_POST['username']));
-    $password = htmlspecialchars(addslashes($_POST['password']));
+    $password = md5($_POST['password']);
     
     require_once("judge/dbconfig.php");
 
