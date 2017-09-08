@@ -94,7 +94,6 @@ def compileJava():
 			print(str(e))
 			pass
 
-		print(output)
 		os.chdir("../")
 		if(os.path.isfile("Cell/Main.class")==False):
 			return output
