@@ -48,4 +48,5 @@ A minimilistic Online Jury written in PHP and Python. This project is a basic se
     c. Done :). Submit and check.
 3. The judge does strict comparison of expected and actual output. Even whitespaces may result in WA. You can modify the judge to ignore the whitespaces character.
 4. The 'Leaderboard' and 'My Submissions' load only the top 100 records by default. The corresponding scripts can be modified to featch even more records.
-5. You can add more languages yourself. The code is simple to read. If you have any doubts or queries, please ping me. :)
+5. You can send messages to individuals that would appear as popup. To send a new message, add the username and message to 'msg' table in the database. 
+6. You can add more languages yourself. The code is simple to read. If you have any doubts or queries, please ping me. :)
