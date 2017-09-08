@@ -45,29 +45,14 @@
 	    	$error = "Please enter your roll no";
 	    }
 	    else{
-	    	$arr = explode("/",$rollno);
-	    	if(count($arr)!=3){
-	    		$error = "Incorrect roll no. format (Correct: BE/100058/15)";
-	    	}
-	    	else if($arr[0]!="BE" && $arr[0]!="BARCH" && $arr[0]!="IMH" && $arr[0]!="IFH"){
-	    		$error = "Incorrect roll no. format (Correct: BE/100058/15)";
-	    	}
-	    	else if($arr[1]<=10000 || $arr[1]>11000){
-	    		$error = "Incorrect roll no. format (Correct: BE/100058/15)";
-	    	}
-	    	else if($arr[2]<12 || $arr[2]>17){
-	    		$error = "Incorrect roll no. format (Correct: BE/100058/15)";
-	    	}
-	    	else{
-	    		if(!filter_var($email,FILTER_VALIDATE_EMAIL)) {
-				  $error = "Invalid Email!";
-				}
-	    		else if(!preg_match('/^[0-9]{10}$/',$phno)){
-			      $error = "Invalid Phone number! Don't mention +91 at the beginning.";
-			    }
-			    else{
-
-			    }
+	    	if(!filter_var($email,FILTER_VALIDATE_EMAIL)) {
+			  $error = "Invalid Email!";
+		}
+	    	else if(!preg_match('/^[0-9]{10}$/',$phno)){
+		     $error = "Invalid Phone number! Don't mention +91 at the beginning.";
+		}
+		else{
+			//Validation was fine..
 	    	}
 	    }
 		require_once("judge/dbconfig.php");
@@ -132,7 +117,7 @@
 								  <input type="text" placeholder="Name" id="name" name="name" value="<?php echo htmlspecialchars($_POST["name"]); ?>" class="form-control" required>
 								</div>
 								<div class="form-group">
-								  <label for="rollno">Roll number (Ex: BE/10058/15):</label>
+								  <label for="rollno">Roll number (Ex: BE/10010/12):</label>
 								  <input type="text" placeholder="Roll number" id="rollno" name="rollno" value="<?php echo htmlspecialchars($_POST["rollno"]); ?>" class="form-control" required>
 								</div>
 								<div class="form-group">
@@ -140,7 +125,7 @@
 								  <input type="text" placeholder="Email ID" id="email" name="email" value="<?php echo htmlspecialchars($_POST["email"]); ?>" class="form-control" required>
 								</div>
 								<div class="form-group">
-								  <label for="phno">Phone no: (Ex: 8603204483):</label>
+								  <label for="phno">Phone no: (Ex: 9898989898):</label>
 								  <input type="number" placeholder="Phone number" id="phno" name="phno" value="<?php echo $_POST["phno"]; ?>" class="form-control" required>
 								</div>
 								<input type="submit" value="Sign up" class="btn btn-primary"><br /><br />
