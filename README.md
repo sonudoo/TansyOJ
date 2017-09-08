@@ -1,6 +1,8 @@
 # TansyOJ
 A minimilistic Online Jury written in PHP and Python. This project is a basic setup for all Online Juries. It is simple to install and configure. I have pen down the steps of installation in details. I hope that you find it useful. Don't forget to star the repository.
 
+Live at: http://34.214.19.39/TansyOJ/
+
 # Features
 1. Supports two languages (from compilation to run) C++ and Java. Additional languages can be added similarly. 
 2. Adding problems is simple. I have not included an Admin Panel. You can build your own if you wish.
