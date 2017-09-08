@@ -1,25 +1,13 @@
 <?php
+
+// Shows the submission and its status.
+
+// Check if the user is logged in
 session_start();
 if(!isset($_SESSION["user"])){
     header('location:../index.php?msg=Please%20login%20first');
 }
 ?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Loadra OJ</title>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/portfolio-item.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/code-styler/default.css">
-    <script src="js/highlight.pack.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
-</head>
 
 <?php
     require_once("header.php");
@@ -29,7 +17,9 @@ if(!isset($_SESSION["user"])){
             <div class="col-lg-12">
                 <?php
                     if(isset($_GET['id'])){
-
+                        
+                        // Get submission id.
+                        
                         $id = htmlspecialchars(addslashes(stripslashes($_GET["id"])));
 
                         require_once("dbconfig.php");
@@ -43,6 +33,9 @@ if(!isset($_SESSION["user"])){
                             $code = str_replace("<", "&lt;", $code);
                             $code = str_replace(">", "&gt;", $code);
                             $lang = "Unknown";
+                            
+                            // Add languages accordingly.
+                            
                             if($row["lang"]==0){
                                 $lang = "lang-cpp";
                             }
