@@ -1,3 +1,7 @@
+<?php
+ // This file is a common header for all pages after user logs in
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,10 +20,14 @@
     <script src="js/jquery-1.11.2.min.js"></script>
     <script src="js/highlight.pack.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <!-- The below script is used for highlighting the code on submissions page -->
     <script>hljs.initHighlightingOnLoad();</script>
 </head>
 
 <body>
+    <?php
+        // The next few lines is for the Message modal. The admins can send messages to individuals that will appear as a popup
+    ?>
 <div id="myModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -29,6 +37,7 @@
             </div>
             <div class="modal-body">
                 <p><?php
+                    // This script fetches the message from database if present. 
                     session_start();
                     require_once("dbconfig.php");
                     $sql = "select * from msg where username='".$_SESSION["user"]."'";
@@ -36,6 +45,7 @@
                     if(mysqli_num_rows($res)>0){
                         $row = mysqli_fetch_assoc($res);
                         $msg = $row["msg"];
+                        // If the message is found, fetch and delete the message
                         $sql1 = "delete from msg where username='".$_SESSION["user"]."'";
                         $res = mysqli_query($conn,$sql1);
                         echo $msg;
