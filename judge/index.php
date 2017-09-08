@@ -1,12 +1,19 @@
 <?php
+// This is the first page that the user sees after logging in. This page lists the problems as well as display them depending on whether the id is set in the query or not. This page also processes submissions.
+
+// Check if the user is logged in
 session_start();
 if(!isset($_SESSION["user"])){
     header('location:../index.php?msg=Please%20login%20first');
 }
+
+// Check if the submission was made.
 if(isset($_POST["problemcode"])){
     $problemcode = htmlspecialchars(stripslashes(trim(str_replace(" ","",$_POST["problemcode"]))));
     $code = addslashes($_POST["code"]);
     $ip = $_SERVER["REMOTE_ADDR"];
+    
+    // Validate the submission
     if(strlen($code) > 50000){
         header("location:index.php?id=".$problemcode."&msg=Code%20too%20large.");
     }
@@ -14,11 +21,14 @@ if(isset($_POST["problemcode"])){
         header("location:index.php?id=".$problemcode."&msg=Please%20enter%20some%20code.");
     }
     if($_POST["lang"]!="0" && $_POST["lang"]!="1"){
+        
+        // 0 for C++ and 1 for Java. Add language code accordingly.
         header("location:index.php?id=".$problemcode."&msg=Incorrect%20language%20selected.");
     }
     
     require_once("dbconfig.php");
-
+    
+    // Check the validity of the problem code. 
     $query = "select * from problems where code='".$problemcode."'";
 
     $result = mysqli_query($conn,$query);
@@ -27,8 +37,12 @@ if(isset($_POST["problemcode"])){
         die("<center>Incorrect problem code. Are you trying to crack into the system?</center>");
     }
 
+    // Insert the submission to the database.
+    
     $query = "insert into submissions(username,problemcode,lang,status,code,ip) values ('".$_SESSION["user"]."','".$problemcode."',".$_POST["lang"].",0,'".$code."','".$ip."')";
-
+    
+    // The judge (judge.py) is waiting for the submission. The below code is used to inform the judge that a submission has been made. If the judge.py script is not running, the submission will be stored and judged next time when the script runs again.
+    
     if(mysqli_query($conn,$query)){
         if(!($sock = socket_create(AF_INET, SOCK_STREAM, 0))){
             die("<center>Sorry, the judge is offline at this time. Your code has been received. <br />It will be judged as soon as the judge is online</center>");
@@ -52,6 +66,8 @@ if(isset($_POST["problemcode"])){
             <div class="col-lg-12">
                 <?php
                     if(isset($_GET["id"])){
+                        
+                        // If the id is set then display the corresponding question.
                         $id = htmlspecialchars(addslashes(stripslashes($_GET["id"])));
 
                         require_once("dbconfig.php");
@@ -81,7 +97,7 @@ if(isset($_POST["problemcode"])){
                                             <b>Time Limit:</b> ".$row["time"]." sec
                                           </p>
                                           <p>
-                                            <b>Allowed languages:</b> C++, Java
+                                            <b>Allowed languages:</b> C++, Java 
                                           </p>
                                           <p>
                                             <b>Source limit:</b> 50000 B
@@ -122,10 +138,15 @@ if(isset($_POST["problemcode"])){
                         } 
                         else{
                             
+                            // Oops. That's a 404 error. No problem corresponding to provided id was found in the database.
+                            
                         }
                     }
                     else{
-
+                        
+                        
+                        // No id set. Show thw list of problems.
+                        
                         require_once("dbconfig.php");
                         $query = "select problemcode,status from submissions where username='".$_SESSION["user"]."'";
                         $result = mysqli_query($conn,$query);
