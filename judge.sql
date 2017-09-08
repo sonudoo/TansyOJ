@@ -104,7 +104,7 @@ CREATE TABLE `submissions` (
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` varchar(20) DEFAULT NULL,
-  `password` varchar(20) DEFAULT NULL,
+  `password` varchar(2000) DEFAULT NULL,
   `name` varchar(20) DEFAULT NULL,
   `rollno` varchar(20) DEFAULT NULL,
   `email` varchar(40) NOT NULL,
