@@ -1,3 +1,7 @@
+<?php
+ // This file is a common footer to all pages after user logs in
+?>
+
 <hr>
         <footer>
             <div class="container">
