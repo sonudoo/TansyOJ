@@ -86,7 +86,7 @@
 .register{ height:<?php if($error!="")   echo "340"; else echo "320"; ?>px;width:220px;margin:auto;border:1px #CCC solid;padding:10px;}
 .register input { padding:5px;margin:5px}
 </style>
-<title>Loadra OJ</title>
+<title>Tansy OJ</title>
 </head>
 <body>
         <div class="container">
