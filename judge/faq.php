@@ -1,4 +1,10 @@
 <?php
+    // This page is almost static. Nothing important to comment
+?>
+
+<?php
+
+// Check if the user is logged in
 session_start();
 if(!isset($_SESSION['user'])){
     header('location:../index.php?msg=Please%20login%20first');
