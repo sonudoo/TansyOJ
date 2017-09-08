@@ -62,9 +62,10 @@
 		if(mysqli_num_rows($res)>0){
 			$error = "Username already exists";
 		}
+		$password = md5($password);
 		$ip = $_SERVER["REMOTE_ADDR"];
 		if($error==""){
-			$sql = "insert into users(username,password,name,rollno,email,phno,ip) values ('$username','md5($password)','$name','$rollno','$email','$phno','$ip')";
+			$sql = "insert into users(username,password,name,rollno,email,phno,ip) values ('$username','$password','$name','$rollno','$email','$phno','$ip')";
 			mysqli_query($conn,$sql);
 			session_start();
 			$_SESSION["user"] = $username;
