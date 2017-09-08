@@ -30,6 +30,10 @@ A minimilistic Online Jury written in PHP and Python. This project is a basic se
 
     <code>pip install pymysql</code>
     
+               OR
+               
+    <code>pip3 install pymysql</code>        
+               
     If pip is not present, you may install it for your corresponding OS.
 10. Run the python script 'judge.py'. It MUST be run as root.
 
@@ -42,9 +46,13 @@ A minimilistic Online Jury written in PHP and Python. This project is a basic se
 # Additional info
 
 1. The judge runs on port number 8080. If you need to change the port number, change the same in 'judge.py' and 'judge/index.php'. Just search for '8080' and replace it with your required port number.
-2.To add a problem, 
+
+2.To add a new problem :- 
+
     a. Login to PhpMyAdmin and add the new problem in the 'problems' table. Each problem has a unique CAPITALIZED code of maximum 10 alphabets called 'problemcode'. Set the 'users_solved' field to 0. Add short description, problem statement and sample I/O. You can use HTML syntax in these fields. Set the time limit in seconds and the level of difficulty (0 for Easy, 1 for Medium, 2 for Hard, 3 for Extreme). 
+    
     b. The I/O files over which the program will be checked is to be kept in 'Problems/' directory. Inside the directory, create a new folder named same as the problem code. Create a folder named 'input' and put your input files (numbered serially 1,2,3,4....) each having extension '.in' in the folder. Create another folder 'output' and put your corresponding output files (numbered serially 1,2,3,4....) each having extension '.out' in that folder. 
+    
     c. Done :). Submit and check.
 3. The judge does strict comparison of expected and actual output. Even whitespaces may result in WA. You can modify the judge to ignore the whitespaces character.
 4. The 'Leaderboard' and 'My Submissions' load only the top 100 records by default. The corresponding scripts can be modified to featch even more records.
