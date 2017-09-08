@@ -7,7 +7,7 @@ if(!isset($_SESSION["user"])){
     header('location:../index.php?msg=Please%20login%20first');
 }
 
-// Check if the submission was made.
+// Check if a submission was made.
 if(isset($_POST["problemcode"])){
     $problemcode = htmlspecialchars(stripslashes(trim(str_replace(" ","",$_POST["problemcode"]))));
     $code = addslashes($_POST["code"]);
@@ -145,7 +145,7 @@ if(isset($_POST["problemcode"])){
                     else{
                         
                         
-                        // No id set. Show thw list of problems.
+                        // No id set. Show the list of all the problems.
                         
                         require_once("dbconfig.php");
                         $query = "select problemcode,status from submissions where username='".$_SESSION["user"]."'";
