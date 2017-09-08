@@ -1,17 +1,24 @@
+# This script is the heart of the judge.
+
 import pymysql,os,subprocess,time,socket,re,pwd
-host = "127.0.0.1"
-port = 8080
+host = "127.0.0.1" #The judge runs locally
+port = 8080 #Port on which the will listen
 mySocket = socket.socket()
 mySocket.bind((host,port))
-judgeOnce = True
+judgeOnce = True #This will make the judge skip the wait phase and judge all unjudged submissions
 ojid = pwd.getpwnam('oj').pw_uid
 rootid = pwd.getpwnam('root').pw_uid
+
+# Replace the below fields with corresponding correct values.
 
 dbserver = "database_server_here"
 username = "database_username_here"
 password = "database_password_here"
 database = "database_name_here"
 
+
+# This function is used to create a new directory named Cell inside which all submissions will be compiled and run.
+# This function is common for all languages.
 
 def gainPermissions():
 	try:
@@ -21,6 +28,8 @@ def gainPermissions():
 		return -1
 	return 0
 
+# This function is used to create the corresponding C++ file from the submission.
+# This function is specific to C++
 
 def fetchCPPCode(code):
 	try:
@@ -31,6 +40,8 @@ def fetchCPPCode(code):
 		return -1
 	return 0
 
+# This function is used to create the corresponding Java file from the submission.
+# This function is specific to Java
 
 def fetchJavaCode(code):
 	try:
@@ -41,6 +52,9 @@ def fetchJavaCode(code):
 		return -1
 	return 0
 
+
+# This function is used to compile the C++ file
+# This function is specific to C++
 
 def compileCPP():
 	try:
@@ -63,6 +77,8 @@ def compileCPP():
 	except:
 		return "Compilation error"
 
+# This function is used to compile the Java file
+# This function is specific to C++
 def compileJava():
 	try:
 		file = "Main.java"
@@ -88,6 +104,9 @@ def compileJava():
 		return "Compilation error"
 
 
+# This function is used to get the list of input and corresponding output files. 
+# This function is common for all languages.
+
 def getIOReady(problemcode):
 	try:
 		input_files = []
@@ -102,6 +121,9 @@ def getIOReady(problemcode):
 		return [-1],[-1]
 	return [0],[0]
 
+# This function is used to get the time limit of the problem.
+# This function is common for all languages.
+
 def fetchTimeLimit(cursor,problemcode):
 	try:
 		cursor.execute("select time from problems where code='"+problemcode+"'")
@@ -110,6 +132,9 @@ def fetchTimeLimit(cursor,problemcode):
 	except:
 		return -1
 
+
+# This function is used to run and check the output of the C++ program.
+# This function is specific to C++.
 
 def runCPPProgram(input_files,output_files,time_limit):
 
@@ -162,6 +187,10 @@ def runCPPProgram(input_files,output_files,time_limit):
 
 	return status,error
 
+
+# This function is used to run and check the output of the Java program.
+# This function is specific to Java.
+
 def runJavaProgram(input_files,output_files,time_limit):
 
 	status = 5
@@ -176,7 +205,9 @@ def runJavaProgram(input_files,output_files,time_limit):
 		p = subprocess.Popen(["java","Main"],stdin=fin,stdout=subprocess.PIPE)
 
 		os.seteuid(rootid)
-
+		
+		# Time limit for java is little more
+		
 		time.sleep(2 + 10*time_limit)
 
 		if(p.poll() is None):
@@ -218,6 +249,9 @@ def runJavaProgram(input_files,output_files,time_limit):
 	return status,error
 
 
+# This function is used to update the leaderboard based on result of the submission.
+# This function is common for all languages.
+
 def updateScoreboard(cursor,problemcode,username):
 
 	cursor.execute("select * from submissions where status=5 and username='"+username+"' and problemcode='"+problemcode+"'")
@@ -243,6 +277,9 @@ def updateScoreboard(cursor,problemcode,username):
 				print("Error in committing to database..")
 				exit(-1)
 
+# This function is used to remove folder Cell
+# This function is common for all languages.
+
 def losePermissions():
 	try:
 		os.system("rm -r Cell/")
@@ -251,6 +288,9 @@ def losePermissions():
 		return -1
 
 while(True):
+	
+	#Judge until stopped
+	
 	if(judgeOnce==False):
 		mySocket.listen(1)
 		print("Listening..")
@@ -265,6 +305,9 @@ while(True):
 	cursor.execute("select * from submissions where status=0")
 	for row in cursor.fetchall():
 		if(row[3]==0):
+			
+			#If the submission is in C++
+			
 			if(gainPermissions()==-1):
 				print("Error occured in getting folder permissions..")
 				exit(-1)
@@ -318,6 +361,7 @@ while(True):
 				exit(-1)
 
 		else:
+			#If the submission is Java. See how similar the steps of C++ and Java is. You can similarly add your own compilers/languages.
 			if(gainPermissions()==-1):
 				print("Error occured in getting folder permissions..")
 				exit(-1)
